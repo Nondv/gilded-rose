@@ -2,6 +2,7 @@ require_relative 'lib/item'
 require_relative 'lib/state_machine'
 require_relative 'lib/state_machines/sulfuras'
 require_relative 'lib/state_machines/aged_brie'
+require_relative 'lib/state_machines/concert_ticket'
 
 class GildedRose
   def initialize(items)
@@ -11,6 +12,7 @@ class GildedRose
   def update_quality()
     engines = [
       StateMachines::Sulfuras,
+      StateMachines::ConcertTicket,
       StateMachines::AgedBrie
     ].map(&:new)
 
@@ -25,37 +27,9 @@ class GildedRose
         next
       end
 
-      if item.name != "Backstage passes to a TAFKAL80ETC concert"
-        item.quality = item.quality - 1 if item.quality > 0
-      else
-        if item.quality < 50
-          item.quality = item.quality + 1
-          if item.name == "Backstage passes to a TAFKAL80ETC concert"
-            if item.sell_in < 11
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-            if item.sell_in < 6
-              if item.quality < 50
-                item.quality = item.quality + 1
-              end
-            end
-          end
-        end
-      end
-
+      item.quality = item.quality - 1 if item.quality > 0
       item.sell_in = item.sell_in - 1
-
-      if item.sell_in < 0
-        if item.name != "Backstage passes to a TAFKAL80ETC concert"
-          if item.quality > 0
-            item.quality = item.quality - 1
-          end
-        else
-          item.quality = item.quality - item.quality
-        end
-      end
+      item.quality = item.quality - 1 if item.sell_in < 0 && item.quality > 0
     end
   end
 end

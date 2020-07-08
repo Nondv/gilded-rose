@@ -117,7 +117,7 @@ describe GildedRose do
         expect(by_sell_in[5].quality).not_to be 12
       end
 
-      it 'increases its quality by 3 when when there are <5 days til the concert' do
+      it 'increases its quality by 3 when when there are <=5 days til the concert' do
         by_sell_in = {
           6 => build_item(name, quality: 10, sell_in: 6),
           5 => build_item(name, quality: 10, sell_in: 5),
