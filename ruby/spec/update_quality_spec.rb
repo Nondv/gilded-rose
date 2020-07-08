@@ -17,6 +17,7 @@ describe GildedRose do
     end
 
     pending 'never increases quality above 50'
+    pending 'never decreases quality above 0'
     pending 'never changes the name'
 
     context 'for a plain item' do
@@ -72,12 +73,14 @@ describe GildedRose do
       it 'increases quality instead of lowering it' do
         normal_item = build_item(name, sell_in: 5, quality: 10)
         out_of_date = build_item(name, sell_in: -1, quality: 10)
+        zero_sell_in = build_item(name, sell_in: 0, quality: 10)
         max_quality = build_item(name, sell_in: 5, quality: 50)
-        subject([normal_item, out_of_date, max_quality])
+        subject([normal_item, out_of_date, max_quality, zero_sell_in])
 
         expect(normal_item.quality).to be 11
         expect(out_of_date.quality).to be 12
         expect(max_quality.quality).to be 50
+        expect(zero_sell_in.quality).to be 12
 
         expect(normal_item.sell_in).to be 4
         expect(out_of_date.sell_in).to be(-2)
