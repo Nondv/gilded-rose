@@ -7,9 +7,10 @@ RSpec.describe StateMachines::Conjured do
   let(:subject) { described_class.new }
   let(:name) { 'Conjured' }
 
-  it 'matches "Conjured" name' do
+  it 'matches items starting with "Conjured"' do
     expect(subject.match_item?(Item.new('Conjured', 0, 0))).to be true
-    expect(subject.match_item?(Item.new('Conjured item', 0, 0))).to be false
+    expect(subject.match_item?(Item.new('Conjured cake', 0, 0))).to be true
+    expect(subject.match_item?(Item.new('Sweet Conjured cake', 0, 0))).to be false
   end
 
   it 'decreases quality by 2' do

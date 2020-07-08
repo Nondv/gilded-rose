@@ -6,7 +6,7 @@ module StateMachines
   # But we don't want to rely on inheritance so no code is shared
   class Conjured
     def match_item?(item)
-      item.name == 'Conjured'
+      item.name.start_with?('Conjured')
     end
 
     def next_state(item)
