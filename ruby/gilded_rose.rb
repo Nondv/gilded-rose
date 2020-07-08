@@ -1,6 +1,7 @@
 require_relative 'lib/item'
 require_relative 'lib/state_machine'
 require_relative 'lib/state_machines/sulfuras'
+require_relative 'lib/state_machines/aged_brie'
 
 class GildedRose
   def initialize(items)
