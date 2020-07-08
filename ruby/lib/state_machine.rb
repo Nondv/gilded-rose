@@ -1,8 +1,25 @@
 # frozen_string_literal: true
 
-#
+##
 # Combines multiple *engines* (see StateMachines module),
 # chooses one for an item, and applies final changes to the output
+#
+# It might have been a good idea to create an abstract engine class like:
+#
+#     class StateMachines::Abstract
+#       def skip_quality_check?
+#         false
+#       end
+#
+#       def next_state(item)
+#         { quality: next_quality(item), sell_in: next_sell_in(item) }
+#       end
+#     end
+#
+# but I think separation is fine. This way we will be less tempted to
+# introduce complex relationships (inheritance) between multiple engines so
+# the code is more straight forward.
+#
 class StateMachine
   def initialize(engines)
     @engines = engines

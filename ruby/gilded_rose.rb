@@ -3,6 +3,7 @@ require_relative 'lib/state_machine'
 require_relative 'lib/state_machines/sulfuras'
 require_relative 'lib/state_machines/aged_brie'
 require_relative 'lib/state_machines/concert_ticket'
+require_relative 'lib/state_machines/conjured'
 require_relative 'lib/state_machines/default'
 
 class GildedRose
@@ -15,6 +16,7 @@ class GildedRose
       StateMachines::Sulfuras,
       StateMachines::ConcertTicket,
       StateMachines::AgedBrie,
+      StateMachines::Conjured,
       StateMachines::Default
     ].map(&:new)
 

@@ -55,6 +55,17 @@ describe GildedRose do
       end
     end
 
+    context 'for "Conjured"' do
+      it 'works degrades twice as fast' do
+        normal = build_item('Conjured', sell_in: 1, quality: 10)
+        old = build_item('Conjured', sell_in: -1, quality: 10)
+        subject([normal, old])
+
+        expect(normal.quality).to be 8
+        expect(old.quality).to be 6
+      end
+    end
+
     context 'for "Sulfuras, Hand of Ragnaros"' do
       let(:name) { 'Sulfuras, Hand of Ragnaros' }
 
