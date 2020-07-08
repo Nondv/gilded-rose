@@ -1,4 +1,5 @@
 require_relative 'lib/item'
+require_relative 'lib/state_machine'
 require_relative 'lib/state_machines/sulfuras'
 
 class GildedRose
@@ -7,17 +8,17 @@ class GildedRose
   end
 
   def update_quality()
-    state_machines = [
+    engines = [
       StateMachines::Sulfuras,
       StateMachines::AgedBrie
     ].map(&:new)
 
+    state_machine = StateMachine.new(engines)
+
     @items.each do |item|
-      sm = state_machines.find { |m| m.match_item?(item) }
-      if sm
-        next_state = sm.next_state(item)
-        # TODO: This is not the best place for this kind of checks
-        item.quality = [next_state[:quality], 50].min
+      if state_machine.compatible?(item)
+        next_state = state_machine.next_state(item)
+        item.quality = next_state[:quality]
         item.sell_in = next_state[:sell_in]
 
         next
