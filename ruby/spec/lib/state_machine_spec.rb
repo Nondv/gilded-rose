@@ -52,5 +52,15 @@ RSpec.describe StateMachine do
       engine = engine_mock(->(_) { true }, ->(_) { { quality: -1, sell_in: 1 } })
       expect(subject([engine]).next_state(1)).to eq(quality: 0, sell_in: 1)
     end
+
+    it 'checks if an engine responds to #skip_quality_check? and acts accordingly' do
+      engine = engine_mock(->(_) { true }, ->(_) { { quality: 51, sell_in: 1 } })
+
+      engine.define_singleton_method(:skip_quality_check?) { false }
+      expect(subject([engine]).next_state(1)).to eq(quality: 50, sell_in: 1)
+
+      engine.define_singleton_method(:skip_quality_check?) { true }
+      expect(subject([engine]).next_state(1)).to eq(quality: 51, sell_in: 1)
+    end
   end
 end

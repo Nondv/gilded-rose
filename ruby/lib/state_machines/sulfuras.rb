@@ -4,6 +4,10 @@ module StateMachines
   # Doesn't change over time
   # NOTE: could be named "LegendaryItem"
   class Sulfuras
+    def skip_quality_check?
+      true
+    end
+
     def match_item?(item)
       item.name == 'Sulfuras, Hand of Ragnaros'
     end

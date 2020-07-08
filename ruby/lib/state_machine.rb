@@ -17,9 +17,7 @@ class StateMachine
     raise unless eng
 
     result = eng.next_state(item)
-    result[:quality] = 50 if result[:quality] > 50
-    result[:quality] = 0 if result[:quality] < 0
-
+    result[:quality] = final_quality(eng, result[:quality])
     result
   end
 
@@ -29,5 +27,13 @@ class StateMachine
 
   def find_engine_for(item)
     engines.find { |e| e.match_item?(item) }
+  end
+
+  def final_quality(engine, quality)
+    return quality if engine.respond_to?(:skip_quality_check?) && engine.skip_quality_check?
+    return 50 if quality > 50
+    return 0 if quality < 0
+
+    quality
   end
 end

@@ -17,4 +17,8 @@ RSpec.describe StateMachines::Sulfuras do
     item = Item.new('Sulfuras, Hand of Ragnaros', 10, 10)
     expect(subject.next_state(item)).to eq(quality: 10, sell_in: 10)
   end
+
+  it 'skips quality checks (can be above 50)' do
+    expect(subject.skip_quality_check?).to be true
+  end
 end
